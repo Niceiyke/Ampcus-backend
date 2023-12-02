@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ["*"]
@@ -101,11 +101,11 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "verceldb",
-            "USER": "default",
-            "PASSWORD": "kmQ0SCHcAX7O",
-            "HOST": "ep-super-frog-53680855-pooler.us-east-1.postgres.vercel-storage.com",
-            "PORT": "5432",
+            "NAME": os.environ.get("POSTGRES_DATABASE"),
+            "USER": os.environ.get("POSTGRES_USER"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+            "HOST": os.environ.get("POSTGRES_HOST"),
+            "PORT": os.environ.get("POSTGRES_PORT"),
         }
     }
 
