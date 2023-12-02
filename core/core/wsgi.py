@@ -12,10 +12,10 @@ from core.settings import base
 
 from django.core.wsgi import get_wsgi_application
 
-if base.DEBUG:
+if base.DEBUG == True:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.local")
 else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.production")
 
 application = get_wsgi_application()
-app=application
+app = application
