@@ -2,7 +2,7 @@ from .base import *
 
 ALLOWED_HOSTS = [".vercel.app", "https://ampcus-backend.vercel.app/"]
 
-print('production')
+print("production")
 
 DATABASES = {
     "default": {
@@ -15,6 +15,7 @@ DATABASES = {
     }
 }
 
+STATIC_URL = "static/"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"

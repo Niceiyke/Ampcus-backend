@@ -1,6 +1,6 @@
 from .base import *
 
-print('local')
+print("local")
 
 ALLOWED_HOSTS = []
 
