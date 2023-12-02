@@ -1,7 +1,8 @@
 from .base import *
 
-ALLOWED_HOSTS = [".vercel.app", "https://ampcus-frontend.vercel.app"]
+ALLOWED_HOSTS = [".vercel.app", "https://ampcus-backend.vercel.app/"]
 
+print('production')
 
 DATABASES = {
     "default": {
