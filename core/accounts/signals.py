@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from members.models import Member
 from .models import CustomUser
 from django.core.mail import send_mail
+from django.conf import settings
 import pyshorteners
 
 
@@ -25,11 +26,12 @@ def send_successefull_signup(sender, instance, created, **kwargs):
 
     short_url = s.tinyurl.short(url)
     print("Shortened URL:", short_url)
+    print("email", settings.EMAIL_HOST_USER)
 
     subject = "Successfull Registration "
     message = f"Thank you for registering with Ama Cooperative Society.\nuse this link {short_url} to update your profile "
-    from_email = "Info@ampcus.com"
+    from_email = settings.EMAIL_HOST_USER
     recipient_list = [instance.email]
 
     if created:
-        send_mail(subject, message, from_email, recipient_list)
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
