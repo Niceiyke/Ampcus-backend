@@ -1,6 +1,6 @@
 from .base import *
 
-ALLOWED_HOSTS = [".vercel.app", "https://ampcus-frontend.vercel.app"]
+ALLOWED_HOSTS = [".vercel.app", "ampcus-backend.vercel.app"]
 
 
 DATABASES = {
