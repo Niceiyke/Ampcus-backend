@@ -14,6 +14,9 @@ from django.core.wsgi import get_wsgi_application
 
 if base.DEBUG == True:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.local")
+
+elif base.DEBUG == True:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.productionDb")
 else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.production")
 

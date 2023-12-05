@@ -8,8 +8,11 @@ from core.settings import base
 def main():
     """Run administrative tasks."""
 
-    if base.DEBUG == "True":
+    if (base.DEBUG == True) & (base.PRODUCTION == False):
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.local")
+
+    elif (base.DEBUG == "True") & (base.PRODUCTION == "True"):
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.productionDb")
     else:
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.production")
 
