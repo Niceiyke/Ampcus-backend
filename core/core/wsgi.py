@@ -12,10 +12,10 @@ from core.settings import base
 
 from django.core.wsgi import get_wsgi_application
 
-if base.DEBUG == True:
+if (base.DEBUG == "True") & (base.PRODUCTION == "False"):
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.local")
 
-elif base.DEBUG == True:
+elif (base.DEBUG == "True") & (base.PRODUCTION == "True"):
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.productionDb")
 else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings.production")
