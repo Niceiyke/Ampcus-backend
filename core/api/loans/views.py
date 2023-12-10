@@ -13,6 +13,16 @@ class ListCreateLoanView(generics.ListCreateAPIView):
     serializer_class = LoanSerializers
 
 
+class LoanDetailapprovedView(generics.RetrieveAPIView):
+    queryset = Loan.objects.all()
+    serializer_class = LoanSerializers
+
+
+class LoanDetailunapprovedView(generics.RetrieveUpdateAPIView):
+    queryset = Loan.objects.all()
+    serializer_class = LoanSerializers
+
+
 class ListCreateLoanRepaymentView(generics.ListCreateAPIView):
     queryset = LoanRepayment.objects.all()
     serializer_class = LoanRepaymentSerializers

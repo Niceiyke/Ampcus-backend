@@ -1,45 +1,33 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
+from django.utils import timezone
 from django.dispatch import receiver
-from django.core.mail import send_mail
+from .sendMail import request_tresurer_approval_email
 
-from .models import Loan
+from .models import Loan, LoanApprovalQueue
+
+
+@receiver(pre_save, sender=Loan)
+def update_is_declined(sender, instance, **kwargs):
+    # Check if the loan is being declined
+    if (
+        instance.is_tresurer_declined
+        or instance.is_president_declined
+        or instance.is_user_declined
+    ):
+        # Set is_declined to True and update the date_declined field
+        instance.is_declined = True
+        instance.date_declined = timezone.now()
+        loan_approval_queue = LoanApprovalQueue.objects.get(loan=instance.id)
+        loan_approval_queue.delete()
+
+    else:
+        # Set is_declined to False if not declined
+        instance.is_declined = False
 
 
 @receiver(post_save, sender=Loan)
-def send_approval_email(sender, instance, **kwargs):
-    if instance.is_tresurer_approved and not instance.is_president_approved:
-        # Send email logic here
-        subject = "Loan Approval Notification"
-        message = f"Your {instance.loan_type.name} of NGN{instance.amount} has been approved by Ampcus Treasurer.\nPlease wait for further approval from Ampcus President."
-        from_email = "your_email@example.com"  # Replace with your email
-        recipient_list = [
-            instance.member.user.email
-        ]  # Replace with the actual member email
-
-        send_mail(subject, message, from_email, recipient_list)
-
-    elif (
-        instance.is_tresurer_approved
-        and instance.is_president_approved
-        and not instance.is_petron_approved
-    ):
-        # Send email logic here
-        subject = "Loan Approval Notification"
-        message = f"Your {instance.loan_type.name} of NGN{instance.amount} has been approved by Ampcus President.\nPlease wait for further approval from Ampcus Petron."
-        from_email = "your_email@example.com"  # Replace with your email
-        recipient_list = [
-            instance.member.user.email
-        ]  # Replace with the actual member email
-
-        send_mail(subject, message, from_email, recipient_list)
-
-    elif instance.is_petron_approved:
-        # Send email logic here
-        subject = "Final Loan Approval Notification"
-        message = f"Congratulations! Your {instance.loan_type.name} of NGN{instance.amount} has been fully approved by all stages. \nYour loan will be disbused within the next 72 hours"
-        from_email = "your_email@example.com"  # Replace with your email
-        recipient_list = [
-            instance.member.user.email
-        ]  # Replace with the actual member email
-
-        send_mail(subject, message, from_email, recipient_list)
+def add_loan_to_approval_queue(sender, instance, created, **kwargs):
+    if created:
+        loan_approval_queue = LoanApprovalQueue.objects.create()
+        loan_approval_queue.loan.add(instance)
+        request_tresurer_approval_email(instance=instance)

@@ -19,19 +19,23 @@ urlpatterns = [
     path("login/", authviews.LoginUserView.as_view()),
     path("user/", authviews.UserView.as_view()),
     # members urls
-    path("member/<int:pk>", memberviews.MemberView.as_view()),
-    path("member-update/<int:pk>", memberviews.MemberUpdate.as_view()),
+    path("member/<str:pk>", memberviews.MemberView.as_view()),
+    path("member-update/<str:pk>", memberviews.MemberUpdate.as_view()),
     path(
-        "member-contribution/<int:pk>", memberviews.MemberUpdateContribution.as_view()
+        "member-contribution/<str:pk>", memberviews.MemberUpdateContribution.as_view()
     ),
     # Transaction Urls
     path("transaction/", transactionviews.ListCreateTransaction.as_view()),
     # Loan Urls
     path("loans/", loanviews.ListCreateLoanView.as_view()),
+    path("loan-detail-approved/<str:pk>", loanviews.LoanDetailapprovedView.as_view()),
+    path(
+        "loan-detail-unapproved/<str:pk>", loanviews.LoanDetailunapprovedView.as_view()
+    ),
     path("loan-repayment/", loanviews.ListCreateLoanRepaymentView.as_view()),
-    path("approve-loan/<int:pk>/", loanviews.LoanApprovalAPIView.as_view()),
+    path("approve-loan/<str:pk>/", loanviews.LoanApprovalAPIView.as_view()),
     # Managementsurls
-    path("loan-detail/<int:pk>/", managementvies.LoanDetailView.as_view()),
+    path("loan-detail/<str:pk>/", managementvies.LoanDetailView.as_view()),
     path("all-contribution/", managementvies.AccountBalances.as_view()),
     path("send-exco-mail/", managementvies.send_Executive_Mail),
     path("send-members-mail/", managementvies.send_Members_Mail),
@@ -39,6 +43,6 @@ urlpatterns = [
     # Admin
     path("admin/list-users", adminviews.ListAllUsersView.as_view()),
     path("admin/list-members", adminviews.ListAllMembersView.as_view()),
-    path("admin/user/<int:pk>", adminviews.RUDUsersView.as_view()),
-    path("admin/member/<int:pk>", adminviews.RUDMembersView.as_view()),
+    path("admin/user/<str:pk>", adminviews.RUDUsersView.as_view()),
+    path("admin/member/<str:pk>", adminviews.RUDMembersView.as_view()),
 ]

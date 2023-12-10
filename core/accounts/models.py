@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+import uuid
 
 
 class CustomUserManager(BaseUserManager):
@@ -24,6 +25,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
     sap_number = models.CharField(max_length=10, unique=True, blank=False)
     first_name = models.CharField(max_length=30, blank=True)
@@ -34,7 +36,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["sap_number"]
+    REQUIRED_FIELDS = ["sap_number",'first_name','last_name']
 
     def __str__(self):
         return self.email

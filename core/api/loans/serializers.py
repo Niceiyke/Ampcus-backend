@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from loans.models import Loan, LoanType, LoanRepayment,HomeAppliance,FoodItem
+from loans.models import (
+    Loan,
+    LoanType,
+    LoanRepayment,
+    HomeAppliance,
+    FoodItem,
+    LoanApprovalQueue,
+)
 from api.services import (
     pay_loan,
     process_loan_transaction,
@@ -26,7 +33,11 @@ class LoanSerializers(serializers.ModelSerializer):
             "repaid_amount",
             "member",
             "loan_type",
+            "attachments",
             "is_active",
+            "is_approved",
+            "is_declined",
+            "is_user_declined",
             "owner",
             "loan_types",
         ]
@@ -34,6 +45,7 @@ class LoanSerializers(serializers.ModelSerializer):
         extra_kwargs = {
             "repaid_amount": {"read_only": True},
             "is_active": {"read_only": True},
+            "is_approved": {"read_only": True},
         }
 
     def get_owner(self, obj):
@@ -52,7 +64,6 @@ class LoanSerializers(serializers.ModelSerializer):
         )
 
         if response["status"] == True:
-            print(validated_data)
             process_loan_transaction(
                 transaction_amount=validated_data["borrowed_amount"],
                 member_object=validated_data["member"],
@@ -90,9 +101,10 @@ class LoanRepaymentSerializers(serializers.ModelSerializer):
 class HomeApplianceSerializer(serializers.ModelSerializer):
     class Meta:
         model = HomeAppliance
-        fields ="__all__"
+        fields = "__all__"
+
 
 class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodItem
-        fields ="__all__"
+        fields = "__all__"

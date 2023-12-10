@@ -1,13 +1,17 @@
 from django.db import models
-from accounts.models import CustomUser
+from django.contrib.auth import get_user_model
+import uuid
 
+
+User=get_user_model()
 
 # Create your models here.
 
 
 class Member(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(
-        CustomUser, on_delete=models.CASCADE, related_name="member"
+        User, on_delete=models.CASCADE, related_name="member"
     )
     monthly_contribution = models.IntegerField(blank=True, null=True)
     phone_number = models.IntegerField(blank=True, null=True)

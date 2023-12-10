@@ -1,8 +1,12 @@
 from django.db import models
-from accounts.models import CustomUser
+from django.contrib.auth import get_user_model
+import uuid
+
+User =get_user_model()
 
 
 class Portfolio(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -10,8 +14,9 @@ class Portfolio(models.Model):
 
 
 class Executive(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="executives"
+        User, on_delete=models.CASCADE, related_name="executives"
     )
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
 
@@ -20,8 +25,9 @@ class Executive(models.Model):
 
 
 class AuditLog(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
-        CustomUser, on_delete=models.SET_NULL, null=True, blank=True
+        User, on_delete=models.SET_NULL, null=True, blank=True
     )
     action = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
