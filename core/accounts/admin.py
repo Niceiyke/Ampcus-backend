@@ -12,34 +12,54 @@ class CustomUserAdmin(UserAdmin):
         "is_active",
         "is_staff",
     )
-    list_filter = ("is_active", "is_staff")
+    search_fields = ("email", "first_name", "last_name", "sap_number")
+    readonly_fields = ("id", "date_joined_nb")
+
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal Info", {"fields": ("first_name", "last_name", "sap_number")}),
+        (
+            "Personal Info",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "sap_number",
+                    "place_of_birth",
+                    "state_of_origin",
+                    "lga",
+                    "marital_status",
+                    "next_of_kin",
+                    "phone_number",
+                    "date_joined_nb",
+                    "date_of_birth",
+                    "currnent_grade",
+                )
+            },
+        ),
         (
             "Permissions",
-            {"fields": ("is_active", "is_staff", "groups", "user_permissions")},
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
         ),
     )
+
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": (
-                    "email",
-                    "password1",
-                    "password2",
-                    "first_name",
-                    "last_name",
-                    "sap_number",
-                    "is_active",
-                    "is_staff",
-                ),
+                "fields": ("email", "password1", "password2", "is_active", "is_staff"),
             },
         ),
     )
-    search_fields = ("email", "sap_number")
+
     ordering = ("email",)
 
 
