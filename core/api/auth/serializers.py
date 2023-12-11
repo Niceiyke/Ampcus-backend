@@ -25,12 +25,7 @@ class UserSerializers(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        user = CustomUser.objects.create(
-            first_name=validated_data["first_name"],
-            last_name=validated_data["last_name"],
-            email=validated_data["email"],
-            sap_number=validated_data["sap_number"],
-        )
+        user = CustomUser.objects.create(**validated_data)
         if user:
             user.set_password(validated_data["password"])
             user.save()

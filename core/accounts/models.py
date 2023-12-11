@@ -29,15 +29,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     sap_number = models.CharField(max_length=10, unique=True, blank=False)
     first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True )
+    last_name = models.CharField(max_length=30, blank=True)
     place_of_birth = models.CharField(max_length=10, blank=True)
     state_of_origin = models.CharField(max_length=50, blank=True)
     lga = models.CharField(max_length=50, blank=True)
-    marital_status=models.CharField(max_length=50, blank=True)
-    next_of_kin=models.CharField(max_length=50, blank=True)
-    phone_number =models.PositiveIntegerField( blank=True)
-    date_joined_nb = models.DateField( blank=True)
-    date_of_birth = models.DateField( blank=True)
+    marital_status = models.CharField(max_length=50, blank=True)
+    next_of_kin = models.CharField(max_length=50, blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    date_joined_nb = models.DateField(blank=True)
+    date_of_birth = models.DateField(blank=True)
     currnent_grade = models.CharField(max_length=10, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -45,7 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["sap_number",'first_name','last_name']
+    REQUIRED_FIELDS = ["sap_number", "first_name", "last_name"]
 
     def __str__(self):
         return self.email
