@@ -27,7 +27,9 @@ def send_successefull_signup(sender, instance, created, **kwargs):
 
     if base.PRODUCTION == "True":
         s = pyshorteners.Shortener()
+        print(url,settings.EMAIL_HOST_PASSWORD)
         short_url = s.tinyurl.short(url)
+        print(short_url)
 
         message = f"Thank you for registering with Ama Cooperative Society.\nuse this link {short_url} to update your profile "
         subject = "Successfull Registration "
@@ -35,16 +37,8 @@ def send_successefull_signup(sender, instance, created, **kwargs):
         from_email = "iykedave04@gmail.com"
         recipient_list = [instance.email]
         if created:
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=from_email,
-                recipient_list=recipient_list,
-                fail_silently=False,
-                auth_user=settings.EMAIL_HOST_USER,
-                auth_password=settings.EMAIL_HOST_PASSWORD,
-            )
-            # send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False,auth_user=settings.EMAIL_HOST_USER,auth_password=settings.EMAIL_HOST_PASSWORD)
     else:
         message = f"Thank you for registering with Ama Cooperative Society.\nuse this link {url} to update your profile "
         subject = "Successfull Registration "
