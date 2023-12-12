@@ -11,7 +11,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         # Add custom claims
         token["email"] = user.email
-        token["id"] =f"{ user.id}"
+        token["id"] = f"{ user.id}"
         token["member"] = f"{user.member.id}"
 
         return token
@@ -20,8 +20,25 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        #fields = ["first_name", "last_name", "email", "sap_number", "password"]
-        fields ='__all__'
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "sap_number",
+            "password",
+            "place_of_birth",
+            "state_of_origin",
+            "lga",
+            "marital_status",
+            "next_of_kin",
+            "phone_number",
+            "date_joined_nb",
+            "date_of_birth",
+            "currnent_grade",
+            "executives",
+        ]
+        # fields ='__all__'
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):

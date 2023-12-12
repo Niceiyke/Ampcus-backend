@@ -1,11 +1,19 @@
 from rest_framework import serializers
 from members.models import Member
+from managements.models import Executive
 from api.loans.serializers import LoanSerializers
 from api.auth.serializers import UserSerializers
 
 
+class ExecutiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Executive
+        fields = "__all__"
+
+
 class MemberSerializer(serializers.ModelSerializer):
     user = UserSerializers(read_only=True)
+    position = ExecutiveSerializer(read_only=True)
     avaliable_balance = serializers.SerializerMethodField()
     existing_loan = serializers.SerializerMethodField()
 

@@ -16,9 +16,9 @@ class LoanAdmin(admin.ModelAdmin):
     list_filter = (
         "is_active",
         "is_approved",
-        "is_tresurer_approved",
+        "is_treasurer_approved",
         "is_president_approved",
-        "is_tresurer_declined",
+        "is_treasurer_declined",
         "is_president_declined",
         "is_user_declined",
         "is_declined",

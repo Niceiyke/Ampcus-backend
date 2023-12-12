@@ -5,8 +5,8 @@ from loans.models import (
     LoanRepayment,
     HomeAppliance,
     FoodItem,
-    LoanApprovalQueue,
 )
+
 from api.services import (
     pay_loan,
     process_loan_transaction,
@@ -34,18 +34,29 @@ class LoanSerializers(serializers.ModelSerializer):
             "member",
             "loan_type",
             "attachments",
+            "comments",
             "is_active",
             "is_approved",
+            "is_treasurer_approved",
             "is_declined",
+            "is_president_approved",
             "is_user_declined",
+            "is_treasurer_declined",
+            "is_president_declined",
             "owner",
+            "is_user_declined",
             "loan_types",
+            "date_initiated",
+            "date_declined",
+            "date_updated",
+            "date_approved",
         ]
 
         extra_kwargs = {
             "repaid_amount": {"read_only": True},
             "is_active": {"read_only": True},
             "is_approved": {"read_only": True},
+            "is_declined": {"read_only": True},
         }
 
     def get_owner(self, obj):
