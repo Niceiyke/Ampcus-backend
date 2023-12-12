@@ -1,12 +1,5 @@
 from rest_framework import serializers
-from loans.models import (
-    Loan,
-    LoanType,
-    LoanRepayment,
-    HomeAppliance,
-    FoodItem,
-    Comment
-)
+from loans.models import Loan, LoanType, LoanRepayment, HomeAppliance, FoodItem, Comment
 
 from api.services import (
     pay_loan,
@@ -19,12 +12,19 @@ from api.services import (
 class LoanTypeSerializers(serializers.ModelSerializer):
     class Meta:
         model = LoanType
+        fields = '__all__'
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
         fields = "__all__"
 
 
 class LoanSerializers(serializers.ModelSerializer):
     owner = serializers.SerializerMethodField()
     loan_types = serializers.SerializerMethodField()
+    comments =CommentSerializer(read_only=True,many=True)
 
     class Meta:
         model = Loan
@@ -34,7 +34,6 @@ class LoanSerializers(serializers.ModelSerializer):
             "repaid_amount",
             "member",
             "loan_type",
-            "attachments",
             "comments",
             "is_active",
             "is_approved",
@@ -120,10 +119,3 @@ class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodItem
         fields = "__all__"
-
-
-class CommentSerializer(serializers.ModelSerializer):
-    class  Meta:
-        model =Comment
-        fields ="__all__"
-

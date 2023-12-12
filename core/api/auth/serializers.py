@@ -40,6 +40,7 @@ class UserSerializers(serializers.ModelSerializer):
         ]
         # fields ='__all__'
         extra_kwargs = {"password": {"write_only": True}}
+        extra_kwargs = {"executives": {"read_only": True}}
 
     def create(self, validated_data):
         user = CustomUser.objects.create(**validated_data)

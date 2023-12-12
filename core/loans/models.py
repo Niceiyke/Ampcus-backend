@@ -21,12 +21,17 @@ class LoanType(models.Model):
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    loan = models.ForeignKey('Loan', on_delete=models.CASCADE)
-    comment = models.CharField(max_length=240)
+    loan = models.ForeignKey("Loan", on_delete=models.CASCADE)
+    description = models.CharField(max_length=240, blank=True)
+    date_commented = models.DateTimeField(auto_now_add=True)
+    attachments = models.FileField(blank=True, null=True)
 
     def __str__(self) -> str:
         super().__str__()
         return f"{self.user.first_name} {self.user.last_name}"
+
+    class Meta:
+        ordering = ("date_commented",)
 
 
 class LoanAwaitingDisbursmentQueue(models.Model):
@@ -50,8 +55,7 @@ class Loan(models.Model):
     loan_type = models.ForeignKey(LoanType, on_delete=models.SET_NULL, null=True)
     borrowed_amount = models.DecimalField(max_digits=10, decimal_places=2)
     repaid_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    attachments = models.FileField(blank=True, null=True)
-    comments = models.ManyToManyField(Comment, blank=True,related_name='loanComment')
+    comments = models.ManyToManyField(Comment, blank=True, related_name="loanComment")
     is_active = models.BooleanField(default=False)
     is_treasurer_approved = models.BooleanField(default=False)
     is_president_approved = models.BooleanField(default=False)
