@@ -21,6 +21,7 @@ class LoanType(models.Model):
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    loan = models.ForeignKey('Loan', on_delete=models.CASCADE)
     comment = models.CharField(max_length=240)
 
     def __str__(self) -> str:
@@ -50,7 +51,7 @@ class Loan(models.Model):
     borrowed_amount = models.DecimalField(max_digits=10, decimal_places=2)
     repaid_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     attachments = models.FileField(blank=True, null=True)
-    comments = models.ManyToManyField(Comment, blank=True)
+    comments = models.ManyToManyField(Comment, blank=True,related_name='loanComment')
     is_active = models.BooleanField(default=False)
     is_treasurer_approved = models.BooleanField(default=False)
     is_president_approved = models.BooleanField(default=False)

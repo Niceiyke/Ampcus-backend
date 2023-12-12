@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 
 
-def request_tresurer_approval_email(instance):
+def request_treasurer_approval_email(instance):
     subject = "Loan Approval Notification"
     message = f"Loan for member {instance.member}, ia awaiting for approval, click this link to view it."
     from_email = "your_email@example.com"  # Replace with your email

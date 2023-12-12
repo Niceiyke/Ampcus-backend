@@ -5,6 +5,7 @@ from loans.models import (
     LoanRepayment,
     HomeAppliance,
     FoodItem,
+    Comment
 )
 
 from api.services import (
@@ -119,3 +120,10 @@ class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodItem
         fields = "__all__"
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class  Meta:
+        model =Comment
+        fields ="__all__"
+
