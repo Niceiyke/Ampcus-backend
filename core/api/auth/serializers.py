@@ -36,7 +36,7 @@ class UserSerializers(serializers.ModelSerializer):
             "date_joined_nb",
             "date_of_birth",
             "currnent_grade",
-            "executives",
+            'member',
         ]
         # fields ='__all__'
         extra_kwargs = {"password": {"write_only": True}}

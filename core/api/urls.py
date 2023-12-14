@@ -32,15 +32,15 @@ urlpatterns = [
     path(
         "loan-detail-unapproved/<str:pk>", loanviews.LoanDetailunapprovedView.as_view()
     ),
-    path('add-comments/',loanviews.LoanCommentViews.as_view()),
+    path("add-comments/", loanviews.LoanCommentViews.as_view()),
     path("loan-repayment/", loanviews.ListCreateLoanRepaymentView.as_view()),
-
     # Managementsurls
     path("loan-detail/<str:pk>/", managementvies.LoanDetailView.as_view()),
     path("all-contribution/", managementvies.AccountBalances.as_view()),
     path("send-exco-mail/", managementvies.send_Executive_Mail),
     path("send-members-mail/", managementvies.send_Members_Mail),
     path("send-personal-mail/", managementvies.send_Personal_mail),
+    path("approvers/", managementvies.ApproversView.as_view()),
     # Admin
     path("admin/list-users", adminviews.ListAllUsersView.as_view()),
     path("admin/list-members", adminviews.ListAllMembersView.as_view()),

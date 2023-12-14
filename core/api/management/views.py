@@ -10,6 +10,7 @@ from transaction.models import Transaction
 from managements.models import Executive
 from members.models import Member
 from api.loans.serializers import LoanSerializers
+from api.auth.serializers import UserSerializers
 
 from .serializes import LoanApprovalSerializers
 
@@ -41,6 +42,39 @@ class LoanDetailView(APIView):
 class ListAllActiveLoans(generics.ListAPIView):
     queryset = Loan.objects.filter(is_active=True)
     serializer_class = LoanSerializers
+
+
+class ApproversView(APIView):
+    def get(self, request):
+        qs = Executive.objects.filter(
+            portfolio="135fac87-72b1-4526-81d2-2932fe3267b7"
+        ).first()
+
+        serializer = UserSerializers(qs.name)
+
+        qsp = Member.objects.filter(id=serializer.data["member"]).first()
+
+        qst = Executive.objects.filter(
+            portfolio="3d84dcb8-cacb-417b-9336-9bcf10044db4"
+        ).first()
+
+
+        serializert = UserSerializers(qst.name)
+
+        qstp = Member.objects.filter(id=serializert.data["member"]).first()
+
+        return Response(
+            {
+                "president_name": f"{serializer.data['first_name']} {serializer.data['last_name'] }",
+                "president_email": serializer.data["email"],
+                "president_phone": serializer.data["phone_number"],
+                "president_picture": str(qsp.profile_picture),
+                "treasurer_name": f"{serializert.data['first_name']} {serializert.data['last_name'] }",
+                "treasurer_email": serializert.data["email"],
+                "treasurer_phone": serializert.data["phone_number"],
+                "treasurer_picture": str(qstp.profile_picture),
+            }
+        )
 
 
 class AccountBalances(APIView):

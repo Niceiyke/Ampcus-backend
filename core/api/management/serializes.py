@@ -11,3 +11,6 @@ class LoanApprovalSerializers(serializers.Serializer):
     tresurer_approved = serializers.BooleanField()
     president_approved = serializers.BooleanField()
     petron_approved = serializers.BooleanField()
+
+
+
