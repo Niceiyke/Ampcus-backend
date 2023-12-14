@@ -18,6 +18,7 @@ class Member(models.Model):
     job_title = models.CharField(max_length=100, blank=True, null=True)
     total_contribution = models.PositiveIntegerField(default=0)
     total_loan = models.PositiveIntegerField(default=0)
+    profile_picture =models.ImageField(upload_to='profile_pictures',blank=True,null=True)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"

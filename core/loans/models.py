@@ -24,7 +24,7 @@ class Comment(models.Model):
     loan = models.ForeignKey("Loan", on_delete=models.CASCADE)
     description = models.CharField(max_length=240, blank=True)
     date_commented = models.DateTimeField(auto_now_add=True)
-    attachments = models.FileField(blank=True, null=True)
+    attachments = models.FileField(upload_to='pdfs',blank=True, null=True)
 
     def __str__(self) -> str:
         super().__str__()
