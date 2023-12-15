@@ -46,6 +46,10 @@ class LoanApprovalQueue(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     loan = models.ManyToManyField("Loan", blank=True, related_name="approvalqueue")
 
+    def __str__(self):
+        return f'{self.id}'
+
+
 
 class Loan(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -64,6 +68,7 @@ class Loan(models.Model):
     is_user_declined = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     is_declined = models.BooleanField(default=False)
+    is_repaid =models.BooleanField(default=False)
     date_initiated = models.DateTimeField(auto_now_add=True)
     date_declined = models.DateTimeField(blank=True, null=True)
     date_updated = models.DateTimeField(auto_now=True)

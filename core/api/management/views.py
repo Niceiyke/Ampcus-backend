@@ -5,7 +5,7 @@ from rest_framework import generics, status
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
-from loans.models import Loan
+from loans.models import Loan,LoanApprovalQueue
 from transaction.models import Transaction
 from managements.models import Executive
 from members.models import Member
@@ -65,14 +65,40 @@ class ApproversView(APIView):
 
         return Response(
             {
+                "president_id": serializer.data["id"],
                 "president_name": f"{serializer.data['first_name']} {serializer.data['last_name'] }",
                 "president_email": serializer.data["email"],
                 "president_phone": serializer.data["phone_number"],
                 "president_picture": str(qsp.profile_picture),
+
+                "treasurer_id": serializert.data["id"],
                 "treasurer_name": f"{serializert.data['first_name']} {serializert.data['last_name'] }",
                 "treasurer_email": serializert.data["email"],
                 "treasurer_phone": serializert.data["phone_number"],
                 "treasurer_picture": str(qstp.profile_picture),
+            }
+        )
+
+
+class LoansAwaitingApprovals(APIView):
+    def get(self,request):
+
+        queryset =LoanApprovalQueue.objects.all()
+        queryset =[qs for qs in queryset] 
+
+    
+        queryset1 = [Loan.objects.filter(approvalqueue=qs).first() for qs in queryset]
+
+  
+
+        serializer =LoanSerializers(queryset1,many=True)
+
+
+        print(queryset)
+        return Response(
+            {
+                "loans_awaiting_approvals":serializer.data,
+             
             }
         )
 

@@ -20,6 +20,7 @@ class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = "__all__"
+        
 
     def get_avaliable_balance(self, obj):
         return obj.total_contribution * 2 - obj.total_loan

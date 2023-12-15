@@ -41,6 +41,7 @@ urlpatterns = [
     path("send-members-mail/", managementvies.send_Members_Mail),
     path("send-personal-mail/", managementvies.send_Personal_mail),
     path("approvers/", managementvies.ApproversView.as_view()),
+    path("loans-awaiting-approvals/", managementvies.LoansAwaitingApprovals.as_view()),
     # Admin
     path("admin/list-users", adminviews.ListAllUsersView.as_view()),
     path("admin/list-members", adminviews.ListAllMembersView.as_view()),

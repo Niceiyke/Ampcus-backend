@@ -30,21 +30,16 @@ def update_is_declined(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Loan)
 def update_is_approved(sender, instance, **kwargs):
-    # Check if the loan is being declined
+
     try:
-        if (
-   
-        instance.is_president_approved
-      
-    ):
-            # Set is_declined to True and update the date_declined field
+        if (instance.is_president_approved):
             instance.is_approved = True
+            instance.is_active =True
             instance.date_approved = timezone.now()
             loan_approval_queue = LoanApprovalQueue.objects.get(loan=instance.id)
             loan_approval_queue.delete()
 
         else:
-            # Set is_declined to False if not declined
             instance.is_approved = False
     
     except:
