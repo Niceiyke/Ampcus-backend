@@ -33,6 +33,7 @@ urlpatterns = [
         "loan-detail-unapproved/<str:pk>", loanviews.LoanDetailunapprovedView.as_view()
     ),
     path("add-comments/", loanviews.LoanCommentViews.as_view()),
+    path("user-decline-loan/<str:pk>/", loanviews.UserLoanDecline.as_view()),
     path("loan-repayment/", loanviews.ListCreateLoanRepaymentView.as_view()),
     # Managementsurls
     path("loan-detail/<str:pk>/", managementvies.LoanDetailView.as_view()),

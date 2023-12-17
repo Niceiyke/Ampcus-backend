@@ -13,7 +13,6 @@ class ExecutiveSerializer(serializers.ModelSerializer):
 
 class MemberSerializer(serializers.ModelSerializer):
     user = UserSerializers(read_only=True)
-    position = ExecutiveSerializer(read_only=True)
     avaliable_balance = serializers.SerializerMethodField()
     existing_loan = serializers.SerializerMethodField()
 
